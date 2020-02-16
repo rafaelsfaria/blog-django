@@ -10,7 +10,7 @@ def post_list(request):
     context = {
         'post_list': posts
     }
-    return render(request, 'post_list.html', context)
+    return render(request, 'posts/index.html', context)
 
 
 def post_detail(request, post_id):
@@ -18,7 +18,7 @@ def post_detail(request, post_id):
     context = {
         'post': post
     }
-    return render(request, 'post_detail.html', context)
+    return render(request, 'posts/detail.html', context)
 
 def post_create(request):
 	form = PostForm(request.POST or None)
@@ -28,7 +28,7 @@ def post_create(request):
 	context = {
 		'form': form
 	}
-	return render(request, 'post_create.html', context)
+	return render(request, 'posts/create.html', context)
 
 def post_update(request, post_id):
 	post = Post.objects.get(id=post_id)
@@ -39,7 +39,7 @@ def post_update(request, post_id):
 	context = {
 		'form': form
 	}
-	return render(request, 'post_update.html', context)
+	return render(request, 'posts/edit.html', context)
 
 def post_delete(request, post_id):
 	post = Post.objects.get(id=post_id)
