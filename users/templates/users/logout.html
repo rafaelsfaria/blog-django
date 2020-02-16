@@ -1,0 +1,10 @@
+{% extends "posts/base.html" %}
+
+{% block content %}
+
+<div class="col-md-8 mt-4">
+    <h3>You have successfuly logged out</h3>
+    <a href="{% url 'login' %}">Log back in here.</a>
+</div>
+
+{% endblock %}
