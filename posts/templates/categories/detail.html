@@ -1,0 +1,22 @@
+{% extends "posts/base.html" %}
+
+{% block content %}
+<!-- Blog Entries Column -->
+<div class="col-md-8">
+
+    <!-- Blog Post -->
+    <div class="card mb-4 mt-4">
+        <div class="card-header">
+            Category detail
+        </div>
+    <div class="card-body">
+      <h2 class="card-title">{{ category.name }}</h2>
+      <p class="card-text">{{ category.slug }}</p>
+    </div>
+    <div class="card-footer text-muted">
+      <a href="{% url 'home' %}">Back to home</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

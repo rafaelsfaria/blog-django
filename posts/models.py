@@ -4,7 +4,8 @@ from datetime import date
 
 # Create your models here.
 class Category(models.Model):
-	name = models.CharField(max_length=50, default='Tecnologia')
+	name = models.CharField(max_length=50, default='Technology')
+	slug = models.SlugField(max_length=50, default='technology')
 
 	class Meta():
 		verbose_name_plural = "categories"

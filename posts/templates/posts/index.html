@@ -19,6 +19,7 @@
     <div class="card-footer text-muted">
       Posted on {{ post.pub_date }} by
       <a href="#">{{ post.author }}</a>
+      <p><a href="{% url 'category-detail' post.category.slug %}">{{ post.category }}</a></p>
     </div>
   </div>
   {% endfor %}

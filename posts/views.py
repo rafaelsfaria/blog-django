@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .models import Post
+from .models import Post, Category
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
@@ -26,3 +26,8 @@ class PostCreate(LoginRequiredMixin, CreateView):
 	def form_valid(self, form):
 		form.instance.author = self.request.user
 		return super().form_valid(form)
+
+class CategoryDetail(LoginRequiredMixin, DetailView):
+	model = Category
+	template_name = 'categories/detail.html'
+	context_object_name = 'category'
