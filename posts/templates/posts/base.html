@@ -83,6 +83,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-6">
+                                {% if categories %}
                                 <ul class="list-unstyled mb-0">
                                     {% for category in categories %}
                                     <li>
@@ -90,6 +91,9 @@
                                     </li>
                                     {% endfor %}
                                 </ul>
+                                {% else %}
+                                <p>No categories are available.</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
