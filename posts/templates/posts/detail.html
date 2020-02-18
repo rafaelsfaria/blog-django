@@ -3,8 +3,6 @@
 {% block content %}
 <!-- Blog Entries Column -->
 <div class="col-md-8">
-
-    <a href="{% url 'home' %}">Back to home</a>
     <!-- Blog Post -->
     <div class="card mb-4 mt-4">
         <div class="card-header">
@@ -17,6 +15,7 @@
     <div class="card-footer text-muted">
       Posted on {{ post.pub_date }} by
       <a href="#">{{ post.author }}</a>
+      <p><a href="{% url 'home' %}">Back to home</a></p>
     </div>
   </div>
 </div>

@@ -12,6 +12,11 @@
     <div class="card-body">
       <h2 class="card-title">{{ category.name }}</h2>
       <p class="card-text">{{ category.slug }}</p>
+      <ul>
+        {% for post in posts %}
+        <a href="{% url 'post-detail' post.id %}"><li>{{ post }}</li></a>
+        {% endfor %}
+      </ul>
     </div>
     <div class="card-footer text-muted">
       <a href="{% url 'home' %}">Back to home</a>
