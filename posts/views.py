@@ -1,5 +1,3 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from functools import reduce
 from .models import Post, Category
 from django.db.models import Q
