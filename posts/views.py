@@ -1,6 +1,9 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from functools import reduce
 from .models import Post, Category
+from django.db.models import Q
+import operator
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
@@ -12,6 +15,19 @@ class HomeView(LoginRequiredMixin, ListView):
     context_object_name = 'blog_posts'
     ordering = ['-pub_date']
     paginate_by = 3
+
+    def get_queryset(self):
+        result = super(HomeView, self).get_queryset()
+        query = self.request.GET.get('q')
+
+        if query:
+            query_list = query.split()
+            result = result.filter(
+                reduce(operator.and_, (Q(title__icontains=q) for q in query_list)) |
+                reduce(operator.and_, (Q(content__icontains=q) for q in query_list))
+            )
+        
+        return result
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -53,5 +69,6 @@ class CategoryDetail(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
-        context['posts'] = Post.objects.filter(category__id=context['category'].id)
+        context['posts'] = Post.objects.filter(
+            category__id=context['category'].id)
         return context
