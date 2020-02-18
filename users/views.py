@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
             username = request.POST['username']
             password = request.POST['password1']

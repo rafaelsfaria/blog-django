@@ -68,7 +68,7 @@
                         <div class="input-group">
                             {% csrf_token %}
                             <form action="{% url 'home' %}" class="d-flex" method="get">
-                                <input type="text" name="q" class="form-control" placeholder="Search by title...">
+                                <input type="text" name="q" class="form-control" placeholder="Search by title/content...">
                                 <span class="input-group-btn">
                                     <button class="btn btn-secondary" type="submit">Go!</button>
                                 </span>
@@ -97,7 +97,7 @@
 
                 <!-- Side Widget -->
                 <div class="card my-4">
-                    <h5 class="card-header">Username info</h5>
+                    <h5 class="card-header">User info</h5>
                     <div class="card-body">
                         <p>username: {{ user.username }}</p>
                         <p>e-mail: {{ user.email }}</p>
