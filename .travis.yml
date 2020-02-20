@@ -12,7 +12,5 @@ services: postgresql
 install:
   - pip install -r requirements.txt
 
-before
-
 script:
   - python manage.py test
