@@ -1,5 +1,5 @@
 {% extends "posts/base.html" %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 
 <div class="col-md-8">
@@ -11,7 +11,7 @@
     <div class="card-body">
         <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ form|crispy }}
             <button class="btn btn-primary" type="submit">Login</button>
         </form>
     </div>

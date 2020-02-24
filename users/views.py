@@ -8,8 +8,8 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            username = request.POST['username']
-            password = request.POST['password1']
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
             user = authenticate(request, username=username, password=password)
             login(request, user)
             return redirect('home')

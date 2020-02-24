@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 
-ALLOWED_HOSTS = ['blogdjangodemo.herokuapp.com']
+ALLOWED_HOSTS = ['blogdjangodemo.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'posts',
     'users'
 ]
@@ -125,6 +126,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 if not DEBUG:
     import django_heroku
     django_heroku.settings(locals())
