@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/rafaelsfaria/blog-django.svg?branch=master)](https://travis-ci.com/rafaelsfaria/blog-django)
+
 # Blog app with Django (python), html/css/js, postgreSQL
 
 Features: Register, login, create new posts

@@ -3,11 +3,9 @@ language: python
 python:
   - 3.8
 
-services: postgresql
-
 env:
-  - SECRET_KEY='TEST'
-  - DEBUG_VALUE='False'
+  - SECRET_KEY=$SECRET_KEY
+  - DEBUG_VALUE=$DEBUG_VALUE
 
 install:
   - pip install -r requirements.txt
