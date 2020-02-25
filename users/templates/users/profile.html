@@ -1,0 +1,29 @@
+{% extends "posts/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="col-md-8 mt-3">
+    <div class="media">
+        <img class="img-thumbnail mr-4 profile-image" src="{{ user.profile.image.url }}">
+        <div class="media-body">
+            <h5 class="mt-0">{{ user.username }}</h5>
+            <p class="text-secondary">{{ user.email }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-4 mt-4">
+        <div class="card-header">
+            User profile
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ u_form|crispy }}
+                {{ p_form|crispy }}
+                <button class="btn btn-primary" type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

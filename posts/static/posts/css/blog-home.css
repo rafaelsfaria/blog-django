@@ -6,3 +6,13 @@
 body {
   padding-top: 56px;
 }
+
+.post-image {
+  width: 64px;
+  height: 64px;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+}
