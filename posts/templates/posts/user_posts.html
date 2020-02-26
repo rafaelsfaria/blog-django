@@ -3,12 +3,11 @@
 {% block content %}
 <!-- Blog Entries Column -->
 <div class="col-md-8">
-
-
+  <h1>Posts by {{ view.kwargs.username }}, ({{ page_obj.paginator.count }})</h1>
   {% if blog_posts %}
   {% for post in blog_posts %}
   <!-- Blog Post -->
-  <div class="card mt-4">
+  <div class="card my-4">
     <div class="card-header">
       <img class="rounded-circle mr-4 post-image" src="{{ post.author.profile.image.url }}" alt="profile pic">
       <a href="{% url 'user-posts' post.author.username %}" >{{ post.author }}</a>
@@ -16,7 +15,6 @@
     <div class="card-body">
       <h2 class="card-title">{{ post.title }}</h2>
       <p class="card-text">{{ post.content|truncatechars:130 }}</p>
-      <a href="{% url 'post-detail' post.pk %}" class="btn btn-primary">Read More &rarr;</a>
     </div>
     <div class="card-footer text-muted">
       Posted on {{ post.pub_date }}
@@ -25,7 +23,7 @@
   </div>
   {% endfor %}
   {% else %}
-  <p>No posts are available.</p>
+  <p>No posts were found.</p>
   {% endif %}
 
   {% if is_paginated %}
@@ -51,57 +49,6 @@
 
 {% endif %}
 
-</div>
-
-<!-- Sidebar Widgets Column -->
-<div class="col-md-4">
-
-  <!-- Search Widget -->
-  <div class="card my-4">
-    <h5 class="card-header">Search</h5>
-    <div class="card-body">
-      <div class="input-group">
-        {% csrf_token %}
-        <form action="{% url 'home' %}" class="d-flex" method="get">
-          <input type="text" name="q" class="form-control" placeholder="Search by title/content...">
-          <span class="input-group-btn">
-            <button class="btn btn-secondary" type="submit">Go!</button>
-          </span>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- Categories Widget -->
-  <div class="card my-4">
-    <h5 class="card-header">Categories</h5>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-lg-6">
-          {% if categories %}
-          <ul class="list-unstyled mb-0">
-            {% for category in categories %}
-            <li>
-              <a href="{% url 'category-detail' category.slug %}">{{ category }}</a>
-            </li>
-            {% endfor %}
-          </ul>
-          {% else %}
-          <p>No categories are available.</p>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Side Widget -->
-  <div class="card my-4">
-    <h5 class="card-header">User info</h5>
-    <div class="card-body">
-      <p>username: {{ user.username }}</p>
-      <p>e-mail: {{ user.email }}</p>
-    </div>
-  </div>
 </div>
 
 {% endblock %}

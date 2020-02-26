@@ -1,9 +1,11 @@
 from functools import reduce
 from .models import Post, Category
 from django.db.models import Q
-import operator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
+import operator
 # Create your views here.
 
 
@@ -32,6 +34,15 @@ class PostListView(ListView):
         context['categories'] = Category.objects.all()
         return context
 
+class UserPostsView(ListView):
+    model = Post
+    template_name = 'posts/user_posts.html'
+    context_object_name = 'blog_posts'
+    paginate_by = 3
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Post.objects.filter(author=user).order_by('-pub_date')
 
 class PostDetailView(DetailView):
     model = Post
