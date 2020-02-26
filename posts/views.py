@@ -2,12 +2,12 @@ from functools import reduce
 from .models import Post, Category
 from django.db.models import Q
 import operator
-from django.views.generic import ListView, DetailView, CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # Create your views here.
 
 
-class HomeView(LoginRequiredMixin, ListView):
+class PostListView(ListView):
     model = Post
     template_name = 'posts/index.html'
     context_object_name = 'blog_posts'
@@ -15,7 +15,7 @@ class HomeView(LoginRequiredMixin, ListView):
     paginate_by = 3
 
     def get_queryset(self):
-        result = super(HomeView, self).get_queryset()
+        result = super(PostListView, self).get_queryset()
         query = self.request.GET.get('q')
 
         if query:
@@ -33,33 +33,47 @@ class HomeView(LoginRequiredMixin, ListView):
         return context
 
 
-class PostView(LoginRequiredMixin, DetailView):
+class PostDetailView(DetailView):
     model = Post
     template_name = 'posts/detail.html'
     context_object_name = 'post'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
-        return context
-
-
-class PostCreate(LoginRequiredMixin, CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'posts/create.html'
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'category']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
-        return context
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    template_name = 'posts/update.html'
+    fields = ['title', 'content', 'category']
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
-class CategoryDetail(LoginRequiredMixin, DetailView):
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    context_object_name = 'post'
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+
+class CategoryDetailView(DetailView):
     model = Category
     template_name = 'categories/detail.html'
     context_object_name = 'category'
