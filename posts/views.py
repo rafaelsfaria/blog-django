@@ -9,7 +9,7 @@ import operator
 # Create your views here.
 
 
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'posts/index.html'
     context_object_name = 'blog_posts'
@@ -34,7 +34,7 @@ class PostListView(ListView):
         context['categories'] = Category.objects.all()
         return context
 
-class UserPostsView(ListView):
+class UserPostsView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'posts/user_posts.html'
     context_object_name = 'blog_posts'
@@ -44,7 +44,7 @@ class UserPostsView(ListView):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Post.objects.filter(author=user).order_by('-pub_date')
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'posts/detail.html'
     context_object_name = 'post'
@@ -84,7 +84,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-class CategoryDetailView(DetailView):
+class CategoryDetailView(LoginRequiredMixin, DetailView):
     model = Category
     template_name = 'categories/detail.html'
     context_object_name = 'category'

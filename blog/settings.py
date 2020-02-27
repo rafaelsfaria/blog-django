@@ -132,4 +132,6 @@ LOGIN_URL = 'login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-django_heroku.settings(locals())
+if not DEBUG:
+    django_heroku.settings(locals())
+    
