@@ -6,7 +6,13 @@
     <!-- Blog Post -->
     <div class="card mb-4 mt-4">
         <div class="card-header">
-            Post detail
+          <div>Post detail</div>
+          {% if post.author == user %}
+          <div>
+            <a href="{% url 'post-update' post.id %}" class="btn btn-secondary">Update</a>
+            <a href="{% url 'post-delete' post.id %}" class="btn btn-danger">Delete</a>
+          </div>
+          {% endif %}
         </div>
     <div class="card-body">
       <h2 class="card-title">{{ post.title }}</h2>
@@ -14,7 +20,8 @@
     </div>
     <div class="card-footer text-muted">
       Posted on {{ post.pub_date }} by
-      <a href="#">{{ post.author }}</a>
+      <a href="{% url 'user-posts' post.author.username %}" >{{ post.author }}</a>
+      <p>Category: {{ post.category }}</p>
       <p><a href="{% url 'home' %}">Back to home</a></p>
     </div>
   </div>

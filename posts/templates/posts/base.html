@@ -31,6 +31,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
                     <li class="nav-item active">
                         <a class="nav-link" href="{% url 'home' %}">Home
                             <span class="sr-only">(current)</span>
@@ -40,12 +41,19 @@
                         <a class="nav-link" href="{% url 'post-create' %}">New Post</a>
                     </li>
                     <li class="nav-item">
-                        {% if user.is_authenticated %}
-                        <a class="nav-link" href="{% url 'logout' %}">
-                            Log Out
-                        </a>
-                        {% endif %}
+                        <a class="nav-link" href="{% url 'profile' %}">Profile</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -53,70 +61,19 @@
 
     <!-- Page Content -->
     <div class="container">
-
+		{% if messages %}
+			{% for message in messages %}
+			<div{% if message.tags %} class="alert mt-4 alert-{{ message.tags }}"{% endif %} role="alert">{{ message }}</div>
+			{% endfor %}
+		{% endif %}
         <div class="row">
-
             {% block content %} {% endblock %}
-            {% if user.is_authenticated %}
-            <!-- Sidebar Widgets Column -->
-            <div class="col-md-4">
-
-                <!-- Search Widget -->
-                <div class="card my-4">
-                    <h5 class="card-header">Search</h5>
-                    <div class="card-body">
-                        <div class="input-group">
-                            {% csrf_token %}
-                            <form action="{% url 'home' %}" class="d-flex" method="get">
-                                <input type="text" name="q" class="form-control" placeholder="Search by title/content...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-secondary" type="submit">Go!</button>
-                                </span>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Categories Widget -->
-                <div class="card my-4">
-                    <h5 class="card-header">Categories</h5>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                {% if categories %}
-                                <ul class="list-unstyled mb-0">
-                                    {% for category in categories %}
-                                    <li>
-                                        <a href="{% url 'category-detail' category.slug %}">{{ category }}</a>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                                {% else %}
-                                <p>No categories are available.</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Side Widget -->
-                <div class="card my-4">
-                    <h5 class="card-header">User info</h5>
-                    <div class="card-body">
-                        <p>username: {{ user.username }}</p>
-                        <p>e-mail: {{ user.email }}</p>
-                    </div>
-                </div>
-
-            </div>
-            {%endif%}
-
         </div>
         <!-- /.row -->
 
     </div>
     <!-- /.container -->
-    
+
 
     <!-- Footer -->
     <footer class="py-5 bg-dark">
