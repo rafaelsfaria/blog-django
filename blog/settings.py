@@ -28,7 +28,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 ALLOWED_HOSTS = ['blogdjangodemo.herokuapp.com', 'localhost']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -130,10 +129,11 @@ MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 
-SITE_ID = 1
-
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-if not DEBUG:
-    django_heroku.settings(locals())
-    
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+django_heroku.settings(locals())

@@ -66,17 +66,3 @@ class PostModelTest(TestCase):
         self.assertEqual(expected, str(post))
 
 #Views
-class HomeViewTest(TestCase):
-    def setUp(self):
-        user = create_user('test_user', 'rafaelsanfaria@gmail.com', 'Rxafd68271@')
-
-    def test_redirect_if_not_logged_in(self):
-        response = self.client.get(reverse('home'))
-        self.assertRedirects(response, '/users/login/?next=/')
-    
-    def test_home_view_after_login(self):
-        self.client.login(username='test_user', password='Rxafd68271@')
-        response = self.client.get(reverse('home'))
-        self.assertEqual(response.context['user'].is_authenticated, True)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'posts/index.html')
