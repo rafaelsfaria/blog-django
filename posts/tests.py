@@ -1,6 +1,5 @@
 from django.test import TestCase
 from .models import Post, Category
-from django.urls import reverse
 import datetime
 from django.contrib.auth.models import User
 
