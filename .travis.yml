@@ -4,6 +4,7 @@ python:
   - 3.8
 
 env:
+  - DJANGO=3.0.3
   - SECRET_KEY=$SECRET_KEY
   - DEBUG_VALUE=$DEBUG_VALUE
 

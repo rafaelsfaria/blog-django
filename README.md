@@ -8,7 +8,8 @@ Models: User, Post, Category
 
 Requirements: python3 and pip3
 
-Clone this repo and create a new virtual environment
+Setup two env variables: DEBUG_VALUE and a SECRET_KEY. Example DEBUG_VALUE=False, SECRET_KEY=secretprojectkey.
+Clone this repo and create a new virtual environment.
 
 On windows:
 ```sh
